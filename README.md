@@ -3,6 +3,12 @@ milk_cls
 
 Classification of milk based on dried drop images of milks
 
+Image processing tools:
+
+* OpenCV
+* Scikit-image
+* Pillow
+
 Project Organization
 ------------
 

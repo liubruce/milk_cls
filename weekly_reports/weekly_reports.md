@@ -15,3 +15,10 @@ Nov. 22- Nov. 28
 ### Blocks:
 
 
+Dec. 6- Dec. 10
+------------------------
+### The works I did:
+1. Using lbm to extract image features
+2. Train a LinearSVC model to train using 8 images
+3. Try to predict 4 images of Lbm.
+### Next week plan:
