@@ -1,6 +1,15 @@
 Weekly Report
 ==============================
 
+Jan. 31- Feb. 4
+------------------------
+### The works I did:
+1. Read documents about detecting circle in an image 
+2.Try to detect circle
+### Next week plan:
+1. Continue to detect the correct circle in the drop images.
+
+
 Nov. 22- Nov. 28
 ------------------------
 ### The works I did:
