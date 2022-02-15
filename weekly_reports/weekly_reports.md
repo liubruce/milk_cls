@@ -1,6 +1,16 @@
 Weekly Report
 ==============================
 
+Feb. 07- Feb. 11
+------------------------
+### The works I did:
+1. can detect circles from a toy image 
+2. Can detect a circle from pancake and donut images.
+### Next week plan:
+1. Continue to detect the correct circle in the drop images.
+
+
+
 Jan. 31- Feb. 4
 ------------------------
 ### The works I did:
