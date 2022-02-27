@@ -1,6 +1,22 @@
 Weekly Report
 ==============================
 
+Feb. 21- Feb. 27
+------------------------
+### The works I did:
+1. crop one donut image and then try to detect the inner cycle. However, it failed.
+### Next week plan:
+1. ??
+
+
+Feb. 14- Feb. 18
+------------------------
+### The works I did:
+1. read five pages shared from Gideon
+### Next week plan:
+1. Continue to detect the inner circle in the donut images.
+
+
 Feb. 07- Feb. 11
 ------------------------
 ### The works I did:
