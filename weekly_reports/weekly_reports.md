@@ -1,12 +1,18 @@
 Weekly Report
 ==============================
+Feb. 28- Mar. 6
+------------------------
+### The works I did:
+1. Generate binary image and then can detect the inner cycle..
+### Next week plan:
+1. 
 
 Feb. 21- Feb. 27
 ------------------------
 ### The works I did:
 1. crop one donut image and then try to detect the inner cycle. However, it failed.
 ### Next week plan:
-1. ??
+1. Binary image to detect inner cycle.
 
 
 Feb. 14- Feb. 18
