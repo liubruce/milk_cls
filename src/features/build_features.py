@@ -198,7 +198,7 @@ def getLBPimage(image):
             else:
                 num = 0
             imgLBP[ih + 1, iw + 1] = num
-    return (imgLBP)
+    return imgLBP
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
