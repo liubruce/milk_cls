@@ -3,14 +3,11 @@ import cv2
 from matplotlib import pyplot as plt
 import logging
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
-import pandas as pd
 import os
-import os.path as osp
 import skimage.io
 import skimage.color
 import skimage.filters
-from PIL import Image
+from PIL import Image, ImageDraw
 
 def draw_circles(img,circles, title):
     color = (255, 0, 0)
@@ -167,7 +164,7 @@ def detect_inner_ring(file_name):
     detect_circles(result, tail)
 
 
-def getLBPimage(image):
+def getLBPimage(image, BGR2GRAY=True):
     '''
     == Input ==
     gray_image  : color image of shape (height, width)
@@ -175,9 +172,11 @@ def getLBPimage(image):
     == Output ==
     imgLBP : LBP converted image of the same shape as
     '''
-
     ### Step 0: Step 0: Convert an image to grayscale
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray_image = image
+    if BGR2GRAY:
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
     imgLBP = np.zeros_like(gray_image)
     neighboor = 3
     for ih in range(0, image.shape[0] - neighboor):
@@ -199,6 +198,63 @@ def getLBPimage(image):
                 num = 0
             imgLBP[ih + 1, iw + 1] = num
     return imgLBP
+
+def extract_infor_circle(img_origin, x, y, r):
+    img_arr = img_origin
+    h,w = img_arr.shape[1], img_arr.shape[0]
+    lum_img = Image.new('L',[h,w] ,0)
+    draw = ImageDraw.Draw(lum_img)
+
+    leftUpPoint = (x-r, y-r)
+    rightDownPoint = (x+r, y+r)
+    twoPointList = [leftUpPoint, rightDownPoint]
+    draw.ellipse(twoPointList, fill=255)
+    lum_img_arr = np.array(lum_img)
+    final_img_arr = np.dstack((img_arr, lum_img_arr))
+    return final_img_arr
+
+def circle_to_lbp(image_file):
+    circles, num_cirlces, img = detect_outside_circle(str(image_file), draw_circle=False)
+    merged_image = extract_infor_circle(img, circles[0][0][0], circles[0][0][1], circles[0][0][2])
+    img = getLBPimage(merged_image, False)
+    return img
+
+def getListOfFiles(dirName):
+    # create a list of file and sub directories
+    # names in the given directory
+    listOfFile = os.listdir(dirName)
+    allFiles = list()
+    # Iterate over all the entries
+    for entry in listOfFile:
+        # Create full path
+        fullPath = os.path.join(dirName, entry)
+        # If entry is a directory then get the list of files in this directory
+        if os.path.isdir(fullPath):
+            allFiles = allFiles + getListOfFiles(fullPath)
+        else:
+            allFiles.append(fullPath)
+
+    return allFiles
+
+def create_training_data(image_path, if_circle=False):
+    imagePaths = getListOfFiles(image_path) ## Folder structure: datasets --> sub-folders with labels name
+
+    data = []
+    lables = []
+    c = 0 ## to see the progress
+    for image in imagePaths:
+
+        lable = os.path.split(os.path.split(image)[0])[1]
+        lables.append(lable)
+        img = cv2.imread(image)
+        if if_circle:
+            imge = circle_to_lbp(image)
+        else:
+            img = getLBPimage(img)
+        img = cv2.resize(img, (100, 100), interpolation = cv2.INTER_AREA)
+        data.append(img[0])
+        c=c+1
+    return data, lables
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
