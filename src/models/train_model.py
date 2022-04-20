@@ -8,7 +8,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from pathlib import Path
 import logging
 
-from  src.features.build_features import create_training_data
+from src.features.build_features import create_training_data
 
 
 def train_test_cls(trainX, testX, trainY, testY, classifier, le):
