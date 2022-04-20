@@ -1,5 +1,14 @@
 Weekly Report
 ==============================
+April. 18- April 24
+------------------------
+### The works I did:
+1. Build the feature pipeline of data for machine learning models.
+2. Leverage three models (KNN, decisiontree and gradientbooster) to validate the accuracies.
+### Next week plan:
+1. Apply new images to check the classification accuracies.
+
+
 Feb. 28- Mar. 6
 ------------------------
 ### The works I did:
