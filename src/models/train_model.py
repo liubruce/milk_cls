@@ -31,8 +31,8 @@ def preprocess_data(data, labels):
     trainX, testX, trainY, testY = train_test_split(data, lables, test_size=0.25, random_state=42)
     return trainX, testX, trainY, testY, le
 
-def multiple_cls_test(image_path, if_circle):
-    data, labels = create_training_data(image_path, if_circle)
+def multiple_cls_test(image_path, if_circle, draw_circle):
+    data, labels = create_training_data(image_path, if_circle, draw_circle)
     trainX, testX, trainY, testY, le = preprocess_data(data, labels)
     cls = KNeighborsClassifier(n_neighbors=3, n_jobs=-1)
     results = train_test_cls(trainX, testX, trainY, testY, cls, le)

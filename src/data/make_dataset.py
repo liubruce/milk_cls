@@ -15,16 +15,27 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+import os, sys
+from PIL import Image
+
+def convert_tiff_jpg(image_path):
+    for infile in os.listdir(image_path):
+        print("file : " + infile, infile[-4:])
+        if infile[-4:] == "tiff":
+            # print "is tif or bmp"
+            outfile = str(image_path) + '/' + infile[:-4] + "jpeg"
+            # print(str(image_path) + outfile, infile)
+            im = Image.open(str(image_path) + '/' +  infile)
+            print("new filename : " + outfile)
+            out = im.convert("RGB")
+            out.save(outfile, "JPEG", quality=90)
 
 if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]
 
-    # find .env automagically by walking up directories until it's found, then
-    # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
+    image_path = Path(str(project_dir) + '/data/raw/220413/transmission/').resolve()
+    for infile in os.listdir(image_path):
+        print(infile)
+        if infile != '.DS_Store':
+            convert_tiff_jpg(Path(str(image_path) + '/' + infile).resolve())
 
-    main()

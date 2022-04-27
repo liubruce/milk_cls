@@ -213,8 +213,8 @@ def extract_infor_circle(img_origin, x, y, r):
     final_img_arr = np.dstack((img_arr, lum_img_arr))
     return final_img_arr
 
-def circle_to_lbp(image_file):
-    circles, num_cirlces, img = detect_outside_circle(str(image_file), draw_circle=False)
+def circle_to_lbp(image_file, draw_circle):
+    circles, num_cirlces, img = detect_outside_circle(str(image_file), draw_circle=draw_circle)
     merged_image = extract_infor_circle(img, circles[0][0][0], circles[0][0][1], circles[0][0][2])
     img = getLBPimage(merged_image, False)
     return img
@@ -236,7 +236,7 @@ def getListOfFiles(dirName):
 
     return allFiles
 
-def create_training_data(image_path, if_circle=False):
+def create_training_data(image_path, if_circle=False, draw_circle=False):
     imagePaths = getListOfFiles(image_path) ## Folder structure: datasets --> sub-folders with labels name
 
     data = []
@@ -246,9 +246,10 @@ def create_training_data(image_path, if_circle=False):
 
         lable = os.path.split(os.path.split(image)[0])[1]
         lables.append(lable)
+        print(image)
         img = cv2.imread(image)
         if if_circle:
-            imge = circle_to_lbp(image)
+            imge = circle_to_lbp(image, draw_circle)
         else:
             img = getLBPimage(img)
         img = cv2.resize(img, (100, 100), interpolation = cv2.INTER_AREA)
