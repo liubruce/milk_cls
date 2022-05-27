@@ -257,6 +257,97 @@ def create_training_data(image_path, if_circle=False, draw_circle=False):
         c=c+1
     return data, lables
 
+def extract_circle_v2(image, height, width, first_ring, second_ring, only_one=True):
+    centerX, centerY, radius = first_ring
+    centerX2, centerY2, radius2 = second_ring
+    canvas = np.zeros((height, width))
+    # Draw the outer circle:
+#     print('redius is ', radius, radius2)
+    color = (255, 255, 255)
+    thickness = -1
+#     centerX = i[0]
+#     centerY = i[1]
+#     radius = i[2]
+    if only_one:
+        radius = radius2
+        cv2.circle(canvas, (centerX, centerY), radius, color, thickness)
+    else:
+        cv2.circle(canvas, (centerX2, centerY2), radius2, color, thickness)
+        color = (0, 0, 0)
+        cv2.circle(canvas, (centerX, centerY), radius, color, thickness)
+
+    # Create a copy of the input and mask input:
+    imageCopy = image.copy()
+    imageCopy[canvas == 0] = (0, 0, 0)
+
+    # Crop the roi:
+    x = centerX - radius
+    y = centerY - radius
+    h = 2 * radius
+    w = 2 * radius
+    if not only_one:
+        x = centerX2 - radius2
+        y = centerY2 - radius2
+        h = 2 * radius2
+        w = 2 * radius2
+    croppedImg = imageCopy[y:y + h, x:x + w]
+    return croppedImg
+
+
+def create_lbp_by_rings(data_dir):
+    #     i = 0
+    vector_data = [[], [], [], [], []]
+    labels = []
+    num_images = 0
+    for image_file in data_dir.iterdir():
+        lable = os.path.split(os.path.split(image_file)[0])[1]
+        labels.append(lable)
+        #         if i > 1:
+        #             break;
+        #         print(os.path.basename(image_file))
+        #         print(image_file)
+        image = cv2.imread(str(image_file))
+        #         print(image.shape)
+        x, y, r = round(image.shape[0] / 2), round(image.shape[1] / 2), 190
+        height = image.shape[0]
+        width = image.shape[1]
+        if num_images == 0:
+            fig = plt.figure(figsize=(50, 10))
+            ax = fig.add_subplot(1, 16, 1)
+            ax.set_title(os.path.basename(image_file))
+            ax.imshow(image)
+            fig_num = 1
+        all_circle_data = []
+        for j in range(5):
+            merged_image = extract_circle_v2(image, height, width, (y, x, j * r), (y, x, (j + 1) * r),
+                                             False if j > 0 else True)
+            imgLBP = getLBPimage(merged_image, True)
+            #             if j == 1:
+            vector_data[j].append(imgLBP)
+            vecimgLBP = imgLBP.flatten()
+            # print('imgLBP.shape', imgLBP.shape)
+            #             ax.set_title("gray scale image")
+            if num_images == 0:
+                fig_num += 1
+                ax = fig.add_subplot(1, 16, fig_num)
+                ax.imshow(Image.fromarray(merged_image))
+                ax.set_title("gray scale image")
+                fig_num += 1
+                ax = fig.add_subplot(1, 16, fig_num)
+                ax.imshow(imgLBP, cmap='gray', vmin=0, vmax=255)
+                ax.set_title("LBP image")
+                fig_num += 1
+                ax = fig.add_subplot(1, 16, fig_num)
+                freq, lbp, _ = ax.hist(vecimgLBP, bins=2 ** 8)
+                ax.set_ylim(0, 100000)
+                lbp = lbp[:-1]
+                ax.set_title("LBP histogram" + str((j + 1) * r))
+        if num_images == 0:
+            plt.show()
+        num_images += 1
+
+    return vector_data, labels
+
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
