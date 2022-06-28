@@ -28,7 +28,7 @@ def preprocess_data(data, labels):
     # print(data.shape)
     # print(lables.shape)
     # print(dataset_size)
-    trainX, testX, trainY, testY = train_test_split(data, lables, test_size=0.25, random_state=42)
+    trainX, testX, trainY, testY = train_test_split(data, lables, test_size=0.20, random_state=42)
     return trainX, testX, trainY, testY, le
 
 def multiple_cls_test(image_path, if_circle, draw_circle):
