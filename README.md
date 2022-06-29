@@ -60,5 +60,30 @@ Project Organization
 
 --------
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
-# milk_cls
+<p><small>Project based on the <a target="_blank" 
+href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+Pancake & Doughnut morphologies of dark blue milk at lower temperatures
+==============================
+
+Feature extraction
+------------
+* Find one circle in pancake and  two circles (outside and inside) doughnut images by using the Hough circle transform.
+  * Notebooks: from 1.0 to 7.0
+
+Classification
+------------
+* Notebook: 9.0-image-classification.
+
+
+
+Dark blue, dbm_gm and green_trim in bottom or side lights
+==============================
+
+Feature extraction
+------------
+* Given the center and extract five rings from images.
+
+Classification
+------------
+* Notebook: 17-combining-rings-lbp-classification-merge-central-ring
