@@ -77,7 +77,7 @@ Classification
 
 
 
-Dark blue, dbm_gm and green_trim in bottom or side lights
+Dark blue, mixture(dbm_gm) and green_trim in bottom or side lights
 ==============================
 
 Feature extraction

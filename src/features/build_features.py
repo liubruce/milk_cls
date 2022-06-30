@@ -299,7 +299,9 @@ def create_lbp_by_rings(data_dir):
     vector_data = [[], [], [], [], []]
     labels = []
     num_images = 0
-    for image_file in data_dir.iterdir():
+    # sorted is very important to merge the first ring from refection and transformation images.
+    for image_file in sorted(data_dir.iterdir()):
+        print(image_file)
         lable = os.path.split(os.path.split(image_file)[0])[1]
         labels.append(lable)
         #         if i > 1:
