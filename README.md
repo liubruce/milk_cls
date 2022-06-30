@@ -69,11 +69,20 @@ Pancake & Doughnut morphologies of dark blue milk at lower temperatures
 Feature extraction
 ------------
 * Find one circle in pancake and  two circles (outside and inside) doughnut images by using the Hough circle transform.
-  * Notebooks: from 1.0 to 7.0
+  * Notebooks
+    * 1.0-bl-initial-data-exploration: read and display the images given.
+    * 2.0-bl-detect-circle: detect circles from images
+    * 3.0-Bruce-Inner-cycle and 04-bruce_inner_cycle: try to detect the inner circle from Doughnut images.
+    * 5.0-Bruce-extract-circles and 5.0-Bruce-extract-circles-auto: extract the pixels from the circled images.
+    * 6.0_auto_two_circles: extract pixels from two circled images
+    * 7.0-original-lbp-histogram: utilize LBP technology to extract image features.
+    * 7.0_auto_outside_circle_lbp_histogram: LBP to extracted features from circled images 
 
 Classification
 ------------
-* Notebook: 9.0-image-classification.
+* Notebooks
+  * 9.0-image-classification: KNN and GradientBoosting are to classify PC and DN. The notebook calls the pipeline function:
+    * multiple_cls_test: from src.models.train_model import multiple_cls_test
 
 
 
@@ -83,7 +92,9 @@ Dark blue, mixture(dbm_gm) and green_trim in bottom or side lights
 Feature extraction
 ------------
 * Given the center and extract five rings from images.
-
+* Notebooks:
+  * 11-new-images-lbp: utilize LBP methods to extract features from different 5 rings which centers are same. The radis of five rings increase by 100 pixels from innter to outside.
 Classification
+  * 12-new-images-lbp-classification: three classifiers are to identify three catagories by lbp features of each ring, merged rings.
 ------------
 * Notebook: 17-combining-rings-lbp-classification-merge-central-ring
